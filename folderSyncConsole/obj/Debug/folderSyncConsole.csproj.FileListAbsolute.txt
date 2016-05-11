@@ -1,0 +1,13 @@
+c:\users\rem\documents\visual studio 2013\Projects\folderSyncConsole\folderSyncConsole\bin\Debug\folderSyncConsole.exe.config
+C:\Users\REM\Documents\Visual Studio 2013\Projects\folderSyncConsole\folderSyncConsole\bin\Debug\folderSyncConsole.exe
+C:\Users\REM\Documents\Visual Studio 2013\Projects\folderSyncConsole\folderSyncConsole\bin\Debug\folderSyncConsole.pdb
+C:\Users\REM\Documents\Visual Studio 2013\Projects\folderSyncConsole\folderSyncConsole\obj\Debug\folderSyncConsole.exe
+C:\Users\REM\Documents\Visual Studio 2013\Projects\folderSyncConsole\folderSyncConsole\obj\Debug\folderSyncConsole.pdb
+C:\Users\REM\documents\visual studio 2013\Projects\folderSyncConsole\folderSyncConsole\bin\Debug\folderSyncConsole.exe.CodeAnalysisLog.xml
+C:\Users\REM\documents\visual studio 2013\Projects\folderSyncConsole\folderSyncConsole\bin\Debug\folderSyncConsole.exe.lastcodeanalysissucceeded
+C:\GIT_Repository\folderSync_tryFix\folderSyncConsole\bin\Debug\folderSyncConsole.exe.config
+C:\GIT_Repository\folderSync_tryFix\folderSyncConsole\obj\Debug\folderSyncConsole.exe
+C:\GIT_Repository\folderSync_tryFix\folderSyncConsole\obj\Debug\folderSyncConsole.pdb
+C:\GIT_Repository\folderSync_tryFix\folderSyncConsole\bin\Debug\folderSyncConsole.exe
+C:\GIT_Repository\folderSync_tryFix\folderSyncConsole\bin\Debug\folderSyncConsole.pdb
+C:\GIT_Repository\folderSync_tryFix\folderSyncConsole\obj\Debug\folderSyncConsole.csprojResolveAssemblyReference.cache

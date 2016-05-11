@@ -1,0 +1,5 @@
+C:\Users\REM\documents\visual studio 2013\Projects\folderSyncConsole\folderSyncConsole\bin\x86\Debug\folderSyncConsole.exe.config
+C:\Users\REM\documents\visual studio 2013\Projects\folderSyncConsole\folderSyncConsole\bin\x86\Debug\folderSyncConsole.exe
+C:\Users\REM\documents\visual studio 2013\Projects\folderSyncConsole\folderSyncConsole\bin\x86\Debug\folderSyncConsole.pdb
+C:\Users\REM\documents\visual studio 2013\Projects\folderSyncConsole\folderSyncConsole\obj\x86\Debug\folderSyncConsole.exe
+C:\Users\REM\documents\visual studio 2013\Projects\folderSyncConsole\folderSyncConsole\obj\x86\Debug\folderSyncConsole.pdb
