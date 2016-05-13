@@ -11,24 +11,32 @@ using Microsoft.Synchronization.Files;
 
 namespace folderSyncConsole
 {
+    public enum SyncDirection
+    {
+        UpdateLeft,
+        UpdateRight,
+        UpdateBoth,
+        MirrorToLeft,
+        MirrorToRight
+
+    }
     public class DoSync
     {
-
+        public SyncDirection Direction { set; get; }
         private string sourceFolderPath;
         private string destinationFolderPath;
-        private int direction;
         private FileSyncScopeFilter filter;
         private FileSyncOptions options;
         private FileSyncProvider sourceFolderProvider = null;
         private FileSyncProvider destinationFolderProvider = null;
 
-        public DoSync(string sourceFolder, string destinationFolder, FileSyncScopeFilter outFilter, FileSyncOptions outOptions, int outDirection)
+        public DoSync(string sourceFolder, string destinationFolder, FileSyncScopeFilter outFilter, FileSyncOptions outOptions, SyncDirection outDirection)
         {
             sourceFolderPath = sourceFolder;
             destinationFolderPath = destinationFolder;
             filter = outFilter;
             options = outOptions;
-            direction = outDirection;
+            Direction = outDirection;
         }
 
         public void Sync()
@@ -40,24 +48,24 @@ namespace folderSyncConsole
             sync.LocalProvider = sourceFolderProvider;
             sync.RemoteProvider = destinationFolderProvider;
             
-            switch (direction)  //TO DO: Change numbers to enums.
+            switch (Direction)  //TO DO: Change numbers to enums.
             {
-                case Program.updateRight:
+                case SyncDirection.UpdateRight:
                     sync.Direction = SyncDirectionOrder.Upload;
                     break;
-                case Program.updateLeft:
+                case SyncDirection.UpdateLeft:
                     sync.Direction = SyncDirectionOrder.Download;
                     break;
-                case Program.updateBoth:
+                case SyncDirection.UpdateBoth:
                     sync.Direction = SyncDirectionOrder.DownloadAndUpload;
                     break;
 
-                case Program.mirrorToLeft:
+                case SyncDirection.MirrorToLeft:
                     sync.Direction = SyncDirectionOrder.Download;
                     DeleteDifference(destinationFolderPath, sourceFolderPath);
                     break;
 
-                case Program.mirrorToRight:
+                case SyncDirection.MirrorToRight:
                     sync.Direction = SyncDirectionOrder.Upload;
                     DeleteDifference(sourceFolderPath, destinationFolderPath);
                     break;

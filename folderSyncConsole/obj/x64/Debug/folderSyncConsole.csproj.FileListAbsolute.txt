@@ -17,3 +17,7 @@ D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\Micros
 D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\Microsoft.Synchronization.xml
 D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\Microsoft.Synchronization.Files.xml
 D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\obj\x64\Debug\folderSyncConsole.csprojResolveAssemblyReference.cache
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\obj\x64\Debug\Microsoft.BrowseFolderUserControl.resources
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\obj\x64\Debug\Microsoft.FiltersUserControl.resources
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\obj\x64\Debug\Microsoft.Form1.resources
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\obj\x64\Debug\folderSyncConsole.csproj.GenerateResource.Cache
