@@ -94,6 +94,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompareDirs.cs" />
     <Compile Include="DoSync.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

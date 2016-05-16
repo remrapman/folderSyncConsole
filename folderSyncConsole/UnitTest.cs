@@ -18,12 +18,18 @@ namespace Microsoft
         private static string copySource = Directory.GetCurrentDirectory() + @"\1\SourceFolder\";
         private static string copyDest = Directory.GetCurrentDirectory() + @"\1\DestinationFolder\";
 
-        private static string sourceFile = Directory.GetCurrentDirectory() + @"\textFiles\source.txt";
-        private static string destFile = Directory.GetCurrentDirectory() + @"\textFiles\dest.txt";
-        private static string updatedFile = Directory.GetCurrentDirectory() + @"\textFiles\updated.txt";
+        //private static string sourceFile = Directory.GetCurrentDirectory() + @"\textFiles\source.txt";
+        //private static string destFile = Directory.GetCurrentDirectory() + @"\textFiles\dest.txt";
+        //private static string updatedFile = Directory.GetCurrentDirectory() + @"\textFiles\updated.txt";
+        public UnitTest(string sourceFolder, string destinationFolder)
+        {
+            sourceFolderPath = sourceFolder;
+            destinationFolderPath = destinationFolder;
+        }
 
         private List<string> Log = new List<string>();
         string logROW;
+        List<string> expectedResult = new List<string>();
         public void Prepare()
         {
             try
@@ -36,6 +42,8 @@ namespace Microsoft
 
                 logROW = "=========Prepare  PASSED successfully=========";
                 AddToLog(logROW, Log);
+                //expectedResult = getExpectedResult();
+
             }
             catch
             {
@@ -68,17 +76,13 @@ namespace Microsoft
 
         }
 
-        private  bool Check(string filePath, string folderPath, List<string> list, string logRow, List<string> log)
+        private bool Check(string sourcePath, string destPath, string logRow, List<string> log)
         {
             bool check = false;
-            ReaderWritter.Readlines(filePath, fileNames);
-
-            for (int i = 0; i < fileNames.Count; i++)
+            
+            foreach(string s in expectedResult)
             {
-                string fileName = System.IO.Path.Combine(folderPath, fileNames[i]);
-
-                //TO DO: Need fix to filenames with "–" symbol. When it chenged to "-" works fine.
-
+                string fileName = System.IO.Path.Combine(sourcePath, s);
                 if (File.Exists(fileName))
                 {
                     check = true;
@@ -88,16 +92,31 @@ namespace Microsoft
                     check = false;
                     logRow = "-------SyncLeft test FAILED-------";
                     AddToLog(logRow, log);
+                    logRow = "File " + s + " failed";
+                    AddToLog(logRow, log);
                     break;
                 }
 
             }
-            fileNames = new List<string>();
+
+            expectedResult = new List<string>();
             return check;
-
-
         }
 
+        public List<string> getExpectedResult()
+        {
+            List<string> expectedResult = new List<string>();
+            CompareFolders comp = new CompareFolders(destinationFolderPath, sourceFolderPath);
+            IEnumerable<System.IO.FileInfo> list = comp.CreateListOfFiles(sourceFolderPath);
+            List<string> differenceList = comp.Compare();
+            foreach(System.IO.FileInfo v in list)
+            {
+                expectedResult.Add(v.Name);
+            }
+            expectedResult.AddRange(differenceList);
+
+            return expectedResult;
+        }
         public void Test(int direction)
         {
             switch (direction)
@@ -123,7 +142,7 @@ namespace Microsoft
         private void UpdateLeft()
         {
 
-            if (Check(updatedFile, sourceFolderPath, fileNames, logROW, Log))
+            if (Check(sourceFolderPath, destinationFolderPath, logROW, Log))
             {
                 logROW = "=========SyncLeft test PASSED successfully=========";
                 AddToLog(logROW, Log);
@@ -137,7 +156,7 @@ namespace Microsoft
 
         private  void UpdateRight()
         {
-            if (Check(updatedFile, destinationFolderPath, fileNames, logROW, Log))
+            if (Check(destinationFolderPath, sourceFolderPath, logROW, Log))
             {
                 logROW = "=========SyncRight test PASSED successfully=========";
                 AddToLog(logROW, Log);
@@ -153,7 +172,7 @@ namespace Microsoft
         private  void UpdateBoth()
         {
 
-            if ((Check(updatedFile, sourceFolderPath, fileNames, logROW, Log)) && Check(updatedFile, destinationFolderPath, fileNames, logROW, Log))
+            if (Check(sourceFolderPath, destinationFolderPath, logROW, Log) && Check(destinationFolderPath, sourceFolderPath, logROW, Log))
             {
                 logROW = "=========SyncBoth test PASSED successfully=========";
                 AddToLog(logROW, Log);
@@ -169,7 +188,7 @@ namespace Microsoft
 
         private  void MirrorToLeft()
         {
-            if (Check(destFile, sourceFolderPath, fileNames, logROW, Log))
+            if (Check(destinationFolderPath, destinationFolderPath, logROW, Log))
             {
                 logROW = "=========MirrorLeft test PASSED successfully=========";
                 AddToLog(logROW, Log);
@@ -185,7 +204,7 @@ namespace Microsoft
         private  void MirrorToRight()
         {
 
-            if (Check(sourceFile, destinationFolderPath, fileNames, logROW, Log))
+            if (Check(sourceFolderPath, sourceFolderPath, logROW, Log))
             {
                 logROW = "=========MirrorRight test PASSED successfully=========";
                 AddToLog(logROW, Log);

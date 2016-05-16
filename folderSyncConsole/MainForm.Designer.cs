@@ -33,8 +33,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.listBox3 = new System.Windows.Forms.ListBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.rightFolderDifferenceListBox = new System.Windows.Forms.ListBox();
+            this.leftFolderDifferenceListBox = new System.Windows.Forms.ListBox();
             this.syncSettingsGroupBox = new System.Windows.Forms.GroupBox();
             this.directionComboBox = new System.Windows.Forms.ComboBox();
             this.doSyncButton = new System.Windows.Forms.Button();
@@ -71,7 +71,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(1422, 566);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Sync Options";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // label1
@@ -93,30 +93,30 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.listBox3);
-            this.groupBox2.Controls.Add(this.listBox2);
+            this.groupBox2.Controls.Add(this.rightFolderDifferenceListBox);
+            this.groupBox2.Controls.Add(this.leftFolderDifferenceListBox);
             this.groupBox2.Location = new System.Drawing.Point(7, 199);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(1409, 260);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
+            this.groupBox2.Text = "Folders Difference";
             // 
-            // listBox3
+            // rightFolderDifferenceListBox
             // 
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.Location = new System.Drawing.Point(727, 20);
-            this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(676, 225);
-            this.listBox3.TabIndex = 0;
+            this.rightFolderDifferenceListBox.FormattingEnabled = true;
+            this.rightFolderDifferenceListBox.Location = new System.Drawing.Point(727, 20);
+            this.rightFolderDifferenceListBox.Name = "rightFolderDifferenceListBox";
+            this.rightFolderDifferenceListBox.Size = new System.Drawing.Size(676, 225);
+            this.rightFolderDifferenceListBox.TabIndex = 0;
             // 
-            // listBox2
+            // leftFolderDifferenceListBox
             // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(7, 19);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(676, 225);
-            this.listBox2.TabIndex = 0;
+            this.leftFolderDifferenceListBox.FormattingEnabled = true;
+            this.leftFolderDifferenceListBox.Location = new System.Drawing.Point(7, 19);
+            this.leftFolderDifferenceListBox.Name = "leftFolderDifferenceListBox";
+            this.leftFolderDifferenceListBox.Size = new System.Drawing.Size(676, 225);
+            this.leftFolderDifferenceListBox.TabIndex = 0;
             // 
             // syncSettingsGroupBox
             // 
@@ -136,6 +136,7 @@
             // 
             // directionComboBox
             // 
+            this.directionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.directionComboBox.FormattingEnabled = true;
             this.directionComboBox.Items.AddRange(new object[] {
             "<<Update Left",
@@ -209,14 +210,14 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(1422, 566);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "Filters";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1445, 616);
+            this.ClientSize = new System.Drawing.Size(1444, 616);
             this.Controls.Add(this.tabControl1);
             this.Name = "MainForm";
             this.Text = "MainForm";
@@ -237,8 +238,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ListBox listBox3;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox rightFolderDifferenceListBox;
+        private System.Windows.Forms.ListBox leftFolderDifferenceListBox;
         private System.Windows.Forms.GroupBox syncSettingsGroupBox;
         private System.Windows.Forms.ComboBox directionComboBox;
         private System.Windows.Forms.Button doSyncButton;

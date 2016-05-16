@@ -48,14 +48,15 @@ namespace Microsoft
             SyncOrchestrator sync = new SyncOrchestrator();
             sync.LocalProvider = sourceFolderProvider;
             sync.RemoteProvider = destinationFolderProvider;
-            
+
             switch (Direction)  //TO DO: Change numbers to enums.
             {
                 case 0:
-                    sync.Direction = SyncDirectionOrder.Upload;
-                    break;
-                case 1:
                     sync.Direction = SyncDirectionOrder.Download;
+                    break;
+
+                case 1:
+                    sync.Direction = SyncDirectionOrder.Upload;
                     break;
                 case 2:
                     sync.Direction = SyncDirectionOrder.DownloadAndUpload;
@@ -113,7 +114,7 @@ namespace Microsoft
                 string fileName = Path.GetFileName(file.FullName);
                 for (int j = 0; j < count; j++)
                 {
-                    
+
                     if (fileName == sourceFilesArray[j])
                     {
                         needDelete = false;
@@ -121,7 +122,7 @@ namespace Microsoft
                     }
                     else
                     {
-                        needDelete = true; 
+                        needDelete = true;
                     }
                 }
                 if (needDelete)
@@ -129,14 +130,7 @@ namespace Microsoft
                     file.Delete();
                 }
             }
-          Console.ReadLine();
-        }
-
-
+        }  
     }
-
-
-
-
 }
 

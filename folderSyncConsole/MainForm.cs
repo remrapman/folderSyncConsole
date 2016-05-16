@@ -20,11 +20,11 @@ namespace Microsoft
         {
             InitializeComponent();
         }
-        public string leftFolderPath;
-        public string rightFolderPath;
+        public static string leftFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\SourceFolder\";
+        public static string rightFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\DestinationFolder\";
         FileSyncScopeFilter mainFilter = new FileSyncScopeFilter();
         FileSyncOptions mainOptions = new FileSyncOptions();
-        UnitTest test = new UnitTest();
+        UnitTest test = new UnitTest(leftFolderPath, rightFolderPath);
         private int direction;
         
 
@@ -60,18 +60,27 @@ namespace Microsoft
 
         private void analizeButton_Click(object sender, EventArgs e)
         {
+            //TO DO: Added hardcoded pathes, must be removed after testing
+            test.Prepare();
+
+            CompareFolders leftDifference = new CompareFolders(leftFolderPath, rightFolderPath);
+            CompareFolders rightDifference = new CompareFolders(rightFolderPath, leftFolderPath);
+            leftFolderDifferenceListBox.DataSource = null;
+            rightFolderDifferenceListBox.DataSource = null;
+            leftFolderDifferenceListBox.DataSource = leftDifference.Compare();
+            rightFolderDifferenceListBox.DataSource = rightDifference.Compare();
 
         }
 
         private void doSyncButton_Click(object sender, EventArgs e)
         {
-            //Added hardcoded pathes, must be removed after testing
-            directionComboBox.SelectedIndex = 0;
+            //TO DO: Added hardcoded pathes, must be removed after testing
             test.Prepare();
-            leftFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\SourceFolder\";
-            rightFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\DestinationFolder\";
             direction = directionComboBox.SelectedIndex;
             DoSync doSync = new DoSync(leftFolderPath, rightFolderPath, mainFilter, mainOptions, direction);
+            
+            //TO DO: Add direction to getExpectedResult
+            test.getExpectedResult();
             doSync.Sync();
             string testId = "Test" + direction;
             test.Test(direction);
