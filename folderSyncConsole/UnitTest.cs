@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-
-namespace folderSyncConsole
+namespace Microsoft
 {
     public class UnitTest
     {
@@ -22,6 +22,8 @@ namespace folderSyncConsole
         private static string destFile = Directory.GetCurrentDirectory() + @"\textFiles\dest.txt";
         private static string updatedFile = Directory.GetCurrentDirectory() + @"\textFiles\updated.txt";
 
+        private List<string> Log = new List<string>();
+        string logROW;
         public void Prepare()
         {
             try
@@ -32,12 +34,13 @@ namespace folderSyncConsole
                 CopyContent(copySource, sourceFolderPath);
                 CopyContent(copyDest, destinationFolderPath);
 
-                Console.WriteLine("=========Prepare  PASSED successfully=========");
+                logROW = "=========Prepare  PASSED successfully=========";
+                AddToLog(logROW, Log);
             }
             catch
             {
-
-                Console.WriteLine("-------Prepare  FAILED-------");
+                logROW = "-------Prepare  FAILED-------";
+                AddToLog(logROW, Log);
             }
         }
 
@@ -65,7 +68,7 @@ namespace folderSyncConsole
 
         }
 
-        private static bool Check(string filePath, string folderPath, List<string> list)
+        private  bool Check(string filePath, string folderPath, List<string> list, string logRow, List<string> log)
         {
             bool check = false;
             ReaderWritter.Readlines(filePath, fileNames);
@@ -83,6 +86,8 @@ namespace folderSyncConsole
                 else
                 {
                     check = false;
+                    logRow = "-------SyncLeft test FAILED-------";
+                    AddToLog(logRow, log);
                     break;
                 }
 
@@ -93,77 +98,115 @@ namespace folderSyncConsole
 
         }
 
-        public static void UpdateLeft()
+        public void Test(int direction)
         {
-
-            if (Check(updatedFile, sourceFolderPath, fileNames))
+            switch (direction)
             {
-                Console.WriteLine("=========SyncLeft test PASSED successfully=========");
-            }
-            else
-            {
-                Console.WriteLine("-------SyncLeft test FAILED-------");
+                case 0:
+                    UpdateLeft();
+                    break;
+                case 1:
+                    UpdateRight();
+                    break;
+                case 2:
+                    UpdateBoth();
+                    break;
+                case 3:
+                    MirrorToLeft();
+                    break;
+                case 4:
+                    MirrorToRight();
+                    break;
             }
         }
 
-        public static void UpdateRight()
+        private void UpdateLeft()
         {
-            if (Check(updatedFile, destinationFolderPath, fileNames))
+
+            if (Check(updatedFile, sourceFolderPath, fileNames, logROW, Log))
             {
-                Console.WriteLine("=========SyncRight test PASSED successfully=========");
+                logROW = "=========SyncLeft test PASSED successfully=========";
+                AddToLog(logROW, Log);
             }
             else
             {
-                Console.WriteLine("-------SyncRight test FAILED-------");
+                logROW = "-------SyncLeft test FAILED-------";
+                AddToLog(logROW, Log);
             }
         }
 
-        
-        public static void UpdateBoth()
+        private  void UpdateRight()
+        {
+            if (Check(updatedFile, destinationFolderPath, fileNames, logROW, Log))
+            {
+                logROW = "=========SyncRight test PASSED successfully=========";
+                AddToLog(logROW, Log);
+            }
+            else
+            {
+                logROW = "-------SyncRight test FAILED-------";
+                AddToLog(logROW, Log);
+            }
+        }
+
+
+        private  void UpdateBoth()
         {
 
-            if ((Check(updatedFile, sourceFolderPath, fileNames)) && Check(updatedFile, destinationFolderPath, fileNames))
+            if ((Check(updatedFile, sourceFolderPath, fileNames, logROW, Log)) && Check(updatedFile, destinationFolderPath, fileNames, logROW, Log))
             {
-                Console.WriteLine("=========SyncBoth test PASSED successfully=========");
+                logROW = "=========SyncBoth test PASSED successfully=========";
+                AddToLog(logROW, Log);
             }
             
             else
             {
-                Console.WriteLine("-------SyncBoth test FAILED-------");
+                logROW = "-------SyncBoth test FAILED-------";
+                AddToLog(logROW, Log);
             }
          }
 
 
-        public static void MirrorToLeft()
+        private  void MirrorToLeft()
         {
-            if (Check(destFile, sourceFolderPath, fileNames))
+            if (Check(destFile, sourceFolderPath, fileNames, logROW, Log))
             {
-
-                Console.WriteLine("=========MirrorLeft test PASSED successfully=========");
+                logROW = "=========MirrorLeft test PASSED successfully=========";
+                AddToLog(logROW, Log);
             }
             else
             {
 
-
-                Console.WriteLine("-------MirrorLeft test FAILED-------");
-
+                logROW = "-------MirrorLeft test FAILED-------";
+                AddToLog(logROW, Log);
             }
         }
 
-        public static void MirrorToRight()
+        private  void MirrorToRight()
         {
 
-            if (Check(sourceFile, destinationFolderPath, fileNames))
+            if (Check(sourceFile, destinationFolderPath, fileNames, logROW, Log))
             {
-
-                Console.WriteLine("=========MirrorRight test PASSED successfully=========");
+                logROW = "=========MirrorRight test PASSED successfully=========";
+                AddToLog(logROW, Log);
             }
             else
             {
-
-
-                Console.WriteLine("-------MirrorRight test FAILED-------");
+                logROW = "-------MirrorRight test FAILED-------";
+                AddToLog(logROW, Log);
             }
+        }
+
+        private void AddToLog(string logRow, List<string> logList)
+        {
+            logList.Add(logRow);
+        }
+
+        public void PrintLog()
+        {
+            var message = string.Join(Environment.NewLine, Log);
+            MessageBox.Show(message);
+            //message = default(string);
         }
 
     }

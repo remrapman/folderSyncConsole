@@ -9,7 +9,7 @@ using Microsoft.Synchronization;
 using Microsoft.Synchronization.Files;
 
 
-namespace folderSyncConsole
+namespace Microsoft
 {
     public enum SyncDirection
     {
@@ -22,15 +22,16 @@ namespace folderSyncConsole
     }
     public class DoSync
     {
-        public SyncDirection Direction { set; get; }
+        //public SyncDirection Direction { set; get; }
         private string sourceFolderPath;
         private string destinationFolderPath;
         private FileSyncScopeFilter filter;
         private FileSyncOptions options;
         private FileSyncProvider sourceFolderProvider = null;
         private FileSyncProvider destinationFolderProvider = null;
+        int Direction;
 
-        public DoSync(string sourceFolder, string destinationFolder, FileSyncScopeFilter outFilter, FileSyncOptions outOptions, SyncDirection outDirection)
+        public DoSync(string sourceFolder, string destinationFolder, FileSyncScopeFilter outFilter, FileSyncOptions outOptions, int outDirection)
         {
             sourceFolderPath = sourceFolder;
             destinationFolderPath = destinationFolder;
@@ -50,22 +51,22 @@ namespace folderSyncConsole
             
             switch (Direction)  //TO DO: Change numbers to enums.
             {
-                case SyncDirection.UpdateRight:
+                case 0:
                     sync.Direction = SyncDirectionOrder.Upload;
                     break;
-                case SyncDirection.UpdateLeft:
+                case 1:
                     sync.Direction = SyncDirectionOrder.Download;
                     break;
-                case SyncDirection.UpdateBoth:
+                case 2:
                     sync.Direction = SyncDirectionOrder.DownloadAndUpload;
                     break;
 
-                case SyncDirection.MirrorToLeft:
+                case 3:
                     sync.Direction = SyncDirectionOrder.Download;
                     DeleteDifference(destinationFolderPath, sourceFolderPath);
                     break;
 
-                case SyncDirection.MirrorToRight:
+                case 4:
                     sync.Direction = SyncDirectionOrder.Upload;
                     DeleteDifference(sourceFolderPath, destinationFolderPath);
                     break;
