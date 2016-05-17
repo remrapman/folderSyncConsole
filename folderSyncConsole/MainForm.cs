@@ -20,12 +20,17 @@ namespace Microsoft
         {
             InitializeComponent();
         }
+        //TO DO: Added hardcoded pathes, must be removed after testing
         public static string leftFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\SourceFolder\";
         public static string rightFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\DestinationFolder\";
         FileSyncScopeFilter mainFilter = new FileSyncScopeFilter();
         FileSyncOptions mainOptions = new FileSyncOptions();
-        UnitTest test = new UnitTest(leftFolderPath, rightFolderPath);
-        private int direction;
+        private static int direction;
+        private static List<string> expectedResult;
+        UnitTest test = new UnitTest(leftFolderPath, rightFolderPath, direction, expectedResult);
+        Prepare pre = new Prepare();
+
+        
         
 
         private void leftFolderBrowseButton_Click(object sender, EventArgs e)
@@ -60,8 +65,8 @@ namespace Microsoft
 
         private void analizeButton_Click(object sender, EventArgs e)
         {
-            //TO DO: Added hardcoded pathes, must be removed after testing
-            test.Prepare();
+           
+            pre.PrepareForTesting();
 
             CompareFolders leftDifference = new CompareFolders(leftFolderPath, rightFolderPath);
             CompareFolders rightDifference = new CompareFolders(rightFolderPath, leftFolderPath);
@@ -74,17 +79,18 @@ namespace Microsoft
 
         private void doSyncButton_Click(object sender, EventArgs e)
         {
-            //TO DO: Added hardcoded pathes, must be removed after testing
-            test.Prepare();
+
+            pre.PrepareForTesting();
             direction = directionComboBox.SelectedIndex;
             DoSync doSync = new DoSync(leftFolderPath, rightFolderPath, mainFilter, mainOptions, direction);
             
-            //TO DO: Add direction to getExpectedResult
-            test.getExpectedResult();
+            //TO DO: Remove parameter "direction" from GetExpectedResult
+            expectedResult = test.GetExpectedResult(direction);
             doSync.Sync();
             string testId = "Test" + direction;
-            test.Test(direction);
-            test.PrintLog();
+            UnitTest test2 = new UnitTest(leftFolderPath, rightFolderPath, direction, expectedResult);
+            test2.Test(direction);
+            test2.PrintLog();
         }
     }
 }

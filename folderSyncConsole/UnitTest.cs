@@ -12,75 +12,29 @@ namespace Microsoft
     public class UnitTest
     {
         private static List<string> fileNames = new List<string>();
-        private static string sourceFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\SourceFolder\";
-        private static string destinationFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\DestinationFolder\";
+        private static string sourceFolderPath;
+        private static string destinationFolderPath;
+        private static int direction;
+        private static List<string> expectedResult;
 
-        private static string copySource = Directory.GetCurrentDirectory() + @"\1\SourceFolder\";
-        private static string copyDest = Directory.GetCurrentDirectory() + @"\1\DestinationFolder\";
-
-        //private static string sourceFile = Directory.GetCurrentDirectory() + @"\textFiles\source.txt";
-        //private static string destFile = Directory.GetCurrentDirectory() + @"\textFiles\dest.txt";
-        //private static string updatedFile = Directory.GetCurrentDirectory() + @"\textFiles\updated.txt";
-        public UnitTest(string sourceFolder, string destinationFolder)
+        public UnitTest(string sourceFolder, string destinationFolder, int outDirection, List<string> outExpectedResult)
         {
             sourceFolderPath = sourceFolder;
             destinationFolderPath = destinationFolder;
+            direction = outDirection;
+            expectedResult = outExpectedResult;
         }
 
         private List<string> Log = new List<string>();
         string logROW;
-        List<string> expectedResult = new List<string>();
-        public void Prepare()
-        {
-            try
-            {
-
-                DeleteContent(sourceFolderPath);
-                DeleteContent(destinationFolderPath);
-                CopyContent(copySource, sourceFolderPath);
-                CopyContent(copyDest, destinationFolderPath);
-
-                logROW = "=========Prepare  PASSED successfully=========";
-                AddToLog(logROW, Log);
-                //expectedResult = getExpectedResult();
-
-            }
-            catch
-            {
-                logROW = "-------Prepare  FAILED-------";
-                AddToLog(logROW, Log);
-            }
-        }
 
 
-        private void DeleteContent(string path)
-        {
-            System.IO.DirectoryInfo di = new DirectoryInfo(path);
-
-            foreach (FileInfo file in di.GetFiles())
-            {
-                file.Delete();
-            }
-        }
-
-        private void CopyContent(string copyPath, string targetPath)
-        {
-            System.IO.DirectoryInfo di = new DirectoryInfo(copyPath);
-            FileInfo[] fi = di.GetFiles();
-            foreach (FileInfo fiTemp in fi)
-            {
-                string sourceFile = System.IO.Path.Combine(copyPath, fiTemp.Name);
-                string destFile = System.IO.Path.Combine(targetPath, fiTemp.Name);
-                System.IO.File.Copy(sourceFile, destFile, true);
-            }
-
-        }
 
         private bool Check(string sourcePath, string destPath, string logRow, List<string> log)
         {
             bool check = false;
-            
-            foreach(string s in expectedResult)
+
+            foreach (string s in expectedResult)
             {
                 string fileName = System.IO.Path.Combine(sourcePath, s);
                 if (File.Exists(fileName))
@@ -99,22 +53,40 @@ namespace Microsoft
 
             }
 
-            expectedResult = new List<string>();
+            //expectedResult = new List<string>();
             return check;
         }
 
-        public List<string> getExpectedResult()
+        public List<string> GetExpectedResult(int direction)
         {
             List<string> expectedResult = new List<string>();
             CompareFolders comp = new CompareFolders(destinationFolderPath, sourceFolderPath);
-            IEnumerable<System.IO.FileInfo> list = comp.CreateListOfFiles(sourceFolderPath);
-            List<string> differenceList = comp.Compare();
-            foreach(System.IO.FileInfo v in list)
+            if (direction == 3)
             {
-                expectedResult.Add(v.Name);
+                IEnumerable<System.IO.FileInfo> list = comp.CreateListOfFiles(destinationFolderPath);
+                List<string> differenceList = comp.Compare();
+                foreach (System.IO.FileInfo v in list)
+                {
+                    expectedResult.Add(v.Name);
+                }
+                if ((direction >= 0) && (direction <= 2))
+                {
+                    expectedResult.AddRange(differenceList);
+                }
             }
-            expectedResult.AddRange(differenceList);
-
+            else
+            {
+                IEnumerable<System.IO.FileInfo> list = comp.CreateListOfFiles(sourceFolderPath);
+                List<string> differenceList = comp.Compare();
+                foreach (System.IO.FileInfo v in list)
+                {
+                    expectedResult.Add(v.Name);
+                }
+                if ((direction >= 0) && (direction <= 2))
+                {
+                    expectedResult.AddRange(differenceList);
+                }
+            }
             return expectedResult;
         }
         public void Test(int direction)
@@ -154,7 +126,7 @@ namespace Microsoft
             }
         }
 
-        private  void UpdateRight()
+        private void UpdateRight()
         {
             if (Check(destinationFolderPath, sourceFolderPath, logROW, Log))
             {
@@ -169,7 +141,7 @@ namespace Microsoft
         }
 
 
-        private  void UpdateBoth()
+        private void UpdateBoth()
         {
 
             if (Check(sourceFolderPath, destinationFolderPath, logROW, Log) && Check(destinationFolderPath, sourceFolderPath, logROW, Log))
@@ -177,18 +149,18 @@ namespace Microsoft
                 logROW = "=========SyncBoth test PASSED successfully=========";
                 AddToLog(logROW, Log);
             }
-            
+
             else
             {
                 logROW = "-------SyncBoth test FAILED-------";
                 AddToLog(logROW, Log);
             }
-         }
+        }
 
 
-        private  void MirrorToLeft()
+        private void MirrorToLeft()
         {
-            if (Check(destinationFolderPath, destinationFolderPath, logROW, Log))
+            if (Check(sourceFolderPath, sourceFolderPath, logROW, Log))
             {
                 logROW = "=========MirrorLeft test PASSED successfully=========";
                 AddToLog(logROW, Log);
@@ -201,7 +173,7 @@ namespace Microsoft
             }
         }
 
-        private  void MirrorToRight()
+        private void MirrorToRight()
         {
 
             if (Check(sourceFolderPath, sourceFolderPath, logROW, Log))
