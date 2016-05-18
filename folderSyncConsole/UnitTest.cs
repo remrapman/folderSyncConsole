@@ -44,9 +44,9 @@ namespace Microsoft
                 else
                 {
                     check = false;
-                    logRow = "-------SyncLeft test FAILED-------";
+                    logROW = DateTime.Now + " Sync test FAILED";
                     AddToLog(logRow, log);
-                    logRow = "File " + s + " failed";
+                    logROW = DateTime.Now + " File " + s + " failed";
                     AddToLog(logRow, log);
                     break;
                 }
@@ -116,12 +116,12 @@ namespace Microsoft
 
             if (Check(sourceFolderPath, destinationFolderPath, logROW, Log))
             {
-                logROW = "=========SyncLeft test PASSED successfully=========";
+                logROW = DateTime.Now + " Left Folder updated successfully";
                 AddToLog(logROW, Log);
             }
             else
             {
-                logROW = "-------SyncLeft test FAILED-------";
+                logROW = DateTime.Now + " Left Folder update FAILED";
                 AddToLog(logROW, Log);
             }
         }
@@ -130,12 +130,12 @@ namespace Microsoft
         {
             if (Check(destinationFolderPath, sourceFolderPath, logROW, Log))
             {
-                logROW = "=========SyncRight test PASSED successfully=========";
+                logROW = DateTime.Now + " Right Folder updated successfully";
                 AddToLog(logROW, Log);
             }
             else
             {
-                logROW = "-------SyncRight test FAILED-------";
+                logROW = DateTime.Now + " Right Folder update FAILED";
                 AddToLog(logROW, Log);
             }
         }
@@ -146,13 +146,13 @@ namespace Microsoft
 
             if (Check(sourceFolderPath, destinationFolderPath, logROW, Log) && Check(destinationFolderPath, sourceFolderPath, logROW, Log))
             {
-                logROW = "=========SyncBoth test PASSED successfully=========";
+                logROW = DateTime.Now + " Both Folders updated successfully";
                 AddToLog(logROW, Log);
             }
 
             else
             {
-                logROW = "-------SyncBoth test FAILED-------";
+                logROW = DateTime.Now + " Both Folders update FAILED";
                 AddToLog(logROW, Log);
             }
         }
@@ -162,13 +162,13 @@ namespace Microsoft
         {
             if (Check(sourceFolderPath, sourceFolderPath, logROW, Log))
             {
-                logROW = "=========MirrorLeft test PASSED successfully=========";
+                logROW = DateTime.Now + " MirrorLeft updated successfully";
                 AddToLog(logROW, Log);
             }
             else
             {
 
-                logROW = "-------MirrorLeft test FAILED-------";
+                logROW = DateTime.Now + " MirrorLeft update FAILED";
                 AddToLog(logROW, Log);
             }
         }
@@ -178,12 +178,12 @@ namespace Microsoft
 
             if (Check(sourceFolderPath, sourceFolderPath, logROW, Log))
             {
-                logROW = "=========MirrorRight test PASSED successfully=========";
+                logROW = DateTime.Now + " MirrorRight updated successfully";
                 AddToLog(logROW, Log);
             }
             else
             {
-                logROW = "-------MirrorRight test FAILED-------";
+                logROW = DateTime.Now + " MirrorRight update FAILED";
                 AddToLog(logROW, Log);
             }
         }
@@ -198,6 +198,11 @@ namespace Microsoft
             var message = string.Join(Environment.NewLine, Log);
             MessageBox.Show(message);
             //message = default(string);
+        }
+
+        public List<string> LogToListBox()
+        {
+            return Log;
         }
 
     }

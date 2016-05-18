@@ -44,10 +44,21 @@
             this.leftFolderBrowseButton = new System.Windows.Forms.Button();
             this.leftFolderTextBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.excludeFilterGroupBox = new System.Windows.Forms.GroupBox();
+            this.excludeFilterAddItemButton = new System.Windows.Forms.Button();
+            this.excludeFilterListBox = new System.Windows.Forms.ListBox();
+            this.excludeFilterTextBox = new System.Windows.Forms.TextBox();
+            this.includeFilterGroupBox = new System.Windows.Forms.GroupBox();
+            this.includeFilterAddItemButton = new System.Windows.Forms.Button();
+            this.includeFilterListBox = new System.Windows.Forms.ListBox();
+            this.includeFilterTextBox = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.syncSettingsGroupBox.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.excludeFilterGroupBox.SuspendLayout();
+            this.includeFilterGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -205,6 +216,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.excludeFilterGroupBox);
+            this.tabPage2.Controls.Add(this.includeFilterGroupBox);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -212,6 +225,84 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Filters";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // excludeFilterGroupBox
+            // 
+            this.excludeFilterGroupBox.Controls.Add(this.excludeFilterAddItemButton);
+            this.excludeFilterGroupBox.Controls.Add(this.excludeFilterListBox);
+            this.excludeFilterGroupBox.Controls.Add(this.excludeFilterTextBox);
+            this.excludeFilterGroupBox.Location = new System.Drawing.Point(757, 6);
+            this.excludeFilterGroupBox.Name = "excludeFilterGroupBox";
+            this.excludeFilterGroupBox.Size = new System.Drawing.Size(665, 554);
+            this.excludeFilterGroupBox.TabIndex = 7;
+            this.excludeFilterGroupBox.TabStop = false;
+            this.excludeFilterGroupBox.Text = "Exclude Filter";
+            // 
+            // excludeFilterAddItemButton
+            // 
+            this.excludeFilterAddItemButton.Enabled = false;
+            this.excludeFilterAddItemButton.Location = new System.Drawing.Point(584, 27);
+            this.excludeFilterAddItemButton.Name = "excludeFilterAddItemButton";
+            this.excludeFilterAddItemButton.Size = new System.Drawing.Size(75, 23);
+            this.excludeFilterAddItemButton.TabIndex = 6;
+            this.excludeFilterAddItemButton.Text = "Add Item";
+            this.excludeFilterAddItemButton.UseVisualStyleBackColor = true;
+            this.excludeFilterAddItemButton.Click += new System.EventHandler(this.excludeFilterAddItemButton_Click);
+            // 
+            // excludeFilterListBox
+            // 
+            this.excludeFilterListBox.FormattingEnabled = true;
+            this.excludeFilterListBox.Location = new System.Drawing.Point(6, 55);
+            this.excludeFilterListBox.Name = "excludeFilterListBox";
+            this.excludeFilterListBox.Size = new System.Drawing.Size(653, 485);
+            this.excludeFilterListBox.TabIndex = 5;
+            // 
+            // excludeFilterTextBox
+            // 
+            this.excludeFilterTextBox.Location = new System.Drawing.Point(6, 29);
+            this.excludeFilterTextBox.Name = "excludeFilterTextBox";
+            this.excludeFilterTextBox.Size = new System.Drawing.Size(572, 20);
+            this.excludeFilterTextBox.TabIndex = 7;
+            this.excludeFilterTextBox.TextChanged += new System.EventHandler(this.excludeFilterTextBox_TextChanged);
+            // 
+            // includeFilterGroupBox
+            // 
+            this.includeFilterGroupBox.Controls.Add(this.includeFilterAddItemButton);
+            this.includeFilterGroupBox.Controls.Add(this.includeFilterListBox);
+            this.includeFilterGroupBox.Controls.Add(this.includeFilterTextBox);
+            this.includeFilterGroupBox.Location = new System.Drawing.Point(6, 6);
+            this.includeFilterGroupBox.Name = "includeFilterGroupBox";
+            this.includeFilterGroupBox.Size = new System.Drawing.Size(665, 554);
+            this.includeFilterGroupBox.TabIndex = 6;
+            this.includeFilterGroupBox.TabStop = false;
+            this.includeFilterGroupBox.Text = "Include Filter";
+            // 
+            // includeFilterAddItemButton
+            // 
+            this.includeFilterAddItemButton.Enabled = false;
+            this.includeFilterAddItemButton.Location = new System.Drawing.Point(584, 27);
+            this.includeFilterAddItemButton.Name = "includeFilterAddItemButton";
+            this.includeFilterAddItemButton.Size = new System.Drawing.Size(75, 22);
+            this.includeFilterAddItemButton.TabIndex = 2;
+            this.includeFilterAddItemButton.Text = "Add Item";
+            this.includeFilterAddItemButton.UseVisualStyleBackColor = true;
+            this.includeFilterAddItemButton.Click += new System.EventHandler(this.includeFilterAddItemButton_Click);
+            // 
+            // includeFilterListBox
+            // 
+            this.includeFilterListBox.FormattingEnabled = true;
+            this.includeFilterListBox.Location = new System.Drawing.Point(6, 55);
+            this.includeFilterListBox.Name = "includeFilterListBox";
+            this.includeFilterListBox.Size = new System.Drawing.Size(653, 485);
+            this.includeFilterListBox.TabIndex = 0;
+            // 
+            // includeFilterTextBox
+            // 
+            this.includeFilterTextBox.Location = new System.Drawing.Point(6, 29);
+            this.includeFilterTextBox.Name = "includeFilterTextBox";
+            this.includeFilterTextBox.Size = new System.Drawing.Size(572, 20);
+            this.includeFilterTextBox.TabIndex = 4;
+            this.includeFilterTextBox.TextChanged += new System.EventHandler(this.includeFilterTextBox_TextChanged);
             // 
             // MainForm
             // 
@@ -227,6 +318,11 @@
             this.groupBox2.ResumeLayout(false);
             this.syncSettingsGroupBox.ResumeLayout(false);
             this.syncSettingsGroupBox.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.excludeFilterGroupBox.ResumeLayout(false);
+            this.excludeFilterGroupBox.PerformLayout();
+            this.includeFilterGroupBox.ResumeLayout(false);
+            this.includeFilterGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -249,5 +345,13 @@
         private System.Windows.Forms.Button leftFolderBrowseButton;
         private System.Windows.Forms.TextBox leftFolderTextBox;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.GroupBox excludeFilterGroupBox;
+        private System.Windows.Forms.Button excludeFilterAddItemButton;
+        private System.Windows.Forms.ListBox excludeFilterListBox;
+        private System.Windows.Forms.TextBox excludeFilterTextBox;
+        private System.Windows.Forms.GroupBox includeFilterGroupBox;
+        private System.Windows.Forms.Button includeFilterAddItemButton;
+        private System.Windows.Forms.ListBox includeFilterListBox;
+        private System.Windows.Forms.TextBox includeFilterTextBox;
     }
 }

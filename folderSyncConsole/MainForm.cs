@@ -23,12 +23,14 @@ namespace Microsoft
         //TO DO: Added hardcoded pathes, must be removed after testing
         public static string leftFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\SourceFolder\";
         public static string rightFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\DestinationFolder\";
-        FileSyncScopeFilter mainFilter = new FileSyncScopeFilter();
+        public FileSyncScopeFilter mainFilter = new FileSyncScopeFilter();
         FileSyncOptions mainOptions = new FileSyncOptions();
         private static int direction;
         private static List<string> expectedResult;
         UnitTest test = new UnitTest(leftFolderPath, rightFolderPath, direction, expectedResult);
         Prepare pre = new Prepare();
+        List<string> forExFilter = new List<string>();
+        List<string> forInFilter = new List<string>();
 
         
         
@@ -85,12 +87,55 @@ namespace Microsoft
             DoSync doSync = new DoSync(leftFolderPath, rightFolderPath, mainFilter, mainOptions, direction);
             
             //TO DO: Remove parameter "direction" from GetExpectedResult
+            //ICollection<string> inList = mainFilter.FileNameIncludes;
+            //ICollection<string> exList = mainFilter.FileNameIncludes;
             expectedResult = test.GetExpectedResult(direction);
             doSync.Sync();
+            //TO DO: why i create testId?
             string testId = "Test" + direction;
             UnitTest test2 = new UnitTest(leftFolderPath, rightFolderPath, direction, expectedResult);
             test2.Test(direction);
-            test2.PrintLog();
+            List<string> forLog = doSync.LogToListBox();
+            forLog.AddRange(test2.LogToListBox());
+            actionsListBox.DataSource = forLog;
+            
+            //actionsListBox.DataSource = doSync.LogToListBox();
+            //actionsListBox.DataSource = test2.LogToListBox();
+            
+        }
+
+        private void includeFilterAddItemButton_Click(object sender, EventArgs e)
+        {
+            mainFilter.FileNameIncludes.Add(includeFilterTextBox.Text);
+            forInFilter = AddItemToFilter(forInFilter, includeFilterTextBox.Text);
+            includeFilterListBox.DataSource = null;
+            includeFilterListBox.DataSource = forInFilter;
+            includeFilterTextBox.Clear();
+        }
+
+        private void includeFilterTextBox_TextChanged(object sender, EventArgs e)
+        {
+            includeFilterAddItemButton.Enabled = !String.IsNullOrEmpty(includeFilterTextBox.Text);
+        }
+
+        private List<string> AddItemToFilter(List<string> inFilter, string item)
+        {
+            inFilter.Add(item);
+            return inFilter;
+        }
+
+        private void excludeFilterAddItemButton_Click(object sender, EventArgs e)
+        {
+            mainFilter.FileNameExcludes.Add(excludeFilterTextBox.Text);
+            forExFilter = AddItemToFilter(forExFilter, excludeFilterTextBox.Text);
+            excludeFilterListBox.DataSource = null;
+            excludeFilterListBox.DataSource = forExFilter;
+            excludeFilterTextBox.Clear();
+        }
+
+        private void excludeFilterTextBox_TextChanged(object sender, EventArgs e)
+        {
+            excludeFilterAddItemButton.Enabled = !String.IsNullOrEmpty(excludeFilterTextBox.Text);
         }
     }
 }

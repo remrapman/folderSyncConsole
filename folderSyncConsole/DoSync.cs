@@ -30,6 +30,7 @@ namespace Microsoft
         private FileSyncProvider sourceFolderProvider = null;
         private FileSyncProvider destinationFolderProvider = null;
         int Direction;
+        List<string> Log = new List<string>();
 
         public DoSync(string sourceFolder, string destinationFolder, FileSyncScopeFilter outFilter, FileSyncOptions outOptions, int outDirection)
         {
@@ -80,17 +81,19 @@ namespace Microsoft
                 SyncOperationStatistics stats = sync.Synchronize();
 
                 // Display statistics for the synchronization operation.
-                msg = "Synchronization succeeded!\n\n" +
-                    stats.DownloadChangesApplied + " download changes applied\n" +
-                    stats.DownloadChangesFailed + " download changes failed\n" +
-                    stats.UploadChangesApplied + " upload changes applied\n" +
+                msg = " Synchronization succeeded!\n\n" + "  **  " +
+                    stats.DownloadChangesApplied + " download changes applied\n" + "  **  " +
+                    stats.DownloadChangesFailed + " download changes failed\n" + "  **  " +
+                    stats.UploadChangesApplied + " upload changes applied\n" + "  **  " + 
                     stats.UploadChangesFailed + " upload changes failed";
+                
             }
             catch (Exception ex)
             {
-                msg = "Synchronization failed! Here's why: \n\n" + ex.Message;
+                msg = " Synchronization failed! Here's why: \n\n" + ex.Message;
             }
-            Console.WriteLine(msg, "Synchronization Results");
+            Log.Add(DateTime.Now + msg);
+            //Console.WriteLine(msg, "Synchronization Results");
         }
 
         private void DeleteDifference(string sourcePath, string destPath)
@@ -130,7 +133,12 @@ namespace Microsoft
                     file.Delete();
                 }
             }
-        }  
+        }
+        
+        public List<string> LogToListBox()
+        {
+            return Log;
+        }
     }
 }
 
