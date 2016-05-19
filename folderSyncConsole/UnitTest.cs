@@ -5,77 +5,37 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-
-namespace folderSyncConsole
+namespace Microsoft
 {
     public class UnitTest
     {
         private static List<string> fileNames = new List<string>();
-        private static string sourceFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\SourceFolder\";
-        private static string destinationFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\DestinationFolder\";
+        private static string sourceFolderPath;
+        private static string destinationFolderPath;
+        private static int direction;
+        public static List<string> expectedResult;
 
-        private static string copySource = Directory.GetCurrentDirectory() + @"\1\SourceFolder\";
-        private static string copyDest = Directory.GetCurrentDirectory() + @"\1\DestinationFolder\";
-
-        private static string sourceFile = Directory.GetCurrentDirectory() + @"\textFiles\source.txt";
-        private static string destFile = Directory.GetCurrentDirectory() + @"\textFiles\dest.txt";
-        private static string updatedFile = Directory.GetCurrentDirectory() + @"\textFiles\updated.txt";
-
-        public void Prepare()
+        public UnitTest(string sourceFolder, string destinationFolder, int outDirection, List<string> outExpectedResult)
         {
-            try
-            {
-
-                DeleteContent(sourceFolderPath);
-                DeleteContent(destinationFolderPath);
-                CopyContent(copySource, sourceFolderPath);
-                CopyContent(copyDest, destinationFolderPath);
-
-                Console.WriteLine("=========Prepare  PASSED successfully=========");
-            }
-            catch
-            {
-
-                Console.WriteLine("-------Prepare  FAILED-------");
-            }
+            sourceFolderPath = sourceFolder;
+            destinationFolderPath = destinationFolder;
+            direction = outDirection;
+            expectedResult = outExpectedResult;
         }
 
+        private List<string> Log = new List<string>();
+        string logROW;
 
-        private void DeleteContent(string path)
-        {
-            System.IO.DirectoryInfo di = new DirectoryInfo(path);
 
-            foreach (FileInfo file in di.GetFiles())
-            {
-                file.Delete();
-            }
-        }
-
-        private void CopyContent(string copyPath, string targetPath)
-        {
-            System.IO.DirectoryInfo di = new DirectoryInfo(copyPath);
-            FileInfo[] fi = di.GetFiles();
-            foreach (FileInfo fiTemp in fi)
-            {
-                string sourceFile = System.IO.Path.Combine(copyPath, fiTemp.Name);
-                string destFile = System.IO.Path.Combine(targetPath, fiTemp.Name);
-                System.IO.File.Copy(sourceFile, destFile, true);
-            }
-
-        }
-
-        private static bool Check(string filePath, string folderPath, List<string> list)
+        private bool Check(string sourcePath, string destPath, string logRow, List<string> log)
         {
             bool check = false;
-            ReaderWritter.Readlines(filePath, fileNames);
 
-            for (int i = 0; i < fileNames.Count; i++)
+            foreach (string s in expectedResult)
             {
-                string fileName = System.IO.Path.Combine(folderPath, fileNames[i]);
-
-                //TO DO: Need fix to filenames with "–" symbol. When it chenged to "-" works fine.
-
+                string fileName = System.IO.Path.Combine(sourcePath, s);
                 if (File.Exists(fileName))
                 {
                     check = true;
@@ -83,87 +43,175 @@ namespace folderSyncConsole
                 else
                 {
                     check = false;
+                    logROW = DateTime.Now + " Sync test FAILED";
+                    AddToLog(logRow, log);
+                    logROW = DateTime.Now + " File " + s + " failed";
+                    AddToLog(logRow, log);
                     break;
                 }
-
             }
-            fileNames = new List<string>();
             return check;
-
-
         }
 
-        public static void UpdateLeft()
+        public List<string> GetExpectedResult(int direction)
         {
-
-            if (Check(updatedFile, sourceFolderPath, fileNames))
+            List<string> expectedResult = new List<string>();
+            CompareFolders comp = new CompareFolders(destinationFolderPath, sourceFolderPath);
+            if (direction == 3)
             {
-                Console.WriteLine("=========SyncLeft test PASSED successfully=========");
+                IEnumerable<System.IO.FileInfo> list = comp.CreateListOfFiles(destinationFolderPath);
+                List<string> differenceList = comp.Compare();
+                foreach (System.IO.FileInfo v in list)
+                {
+                    expectedResult.Add(v.Name);
+                }
+                if ((direction >= 0) && (direction <= 2))
+                {
+                    expectedResult.AddRange(differenceList);
+                }
             }
             else
             {
-                Console.WriteLine("-------SyncLeft test FAILED-------");
+                IEnumerable<System.IO.FileInfo> list = comp.CreateListOfFiles(sourceFolderPath);
+                List<string> differenceList = comp.Compare();
+                foreach (System.IO.FileInfo v in list)
+                {
+                    expectedResult.Add(v.Name);
+                }
+                if ((direction >= 0) && (direction <= 2))
+                {
+                    expectedResult.AddRange(differenceList);
+                }
             }
+            return expectedResult;
         }
 
-        public static void UpdateRight()
+        public void Test(int direction)
         {
-            if (Check(updatedFile, destinationFolderPath, fileNames))
+            switch (direction)
             {
-                Console.WriteLine("=========SyncRight test PASSED successfully=========");
-            }
-            else
-            {
-                Console.WriteLine("-------SyncRight test FAILED-------");
-            }
-        }
-
-        
-        public static void UpdateBoth()
-        {
-
-            if ((Check(updatedFile, sourceFolderPath, fileNames)) && Check(updatedFile, destinationFolderPath, fileNames))
-            {
-                Console.WriteLine("=========SyncBoth test PASSED successfully=========");
-            }
-            
-            else
-            {
-                Console.WriteLine("-------SyncBoth test FAILED-------");
-            }
-         }
-
-
-        public static void MirrorToLeft()
-        {
-            if (Check(destFile, sourceFolderPath, fileNames))
-            {
-
-                Console.WriteLine("=========MirrorLeft test PASSED successfully=========");
-            }
-            else
-            {
-
-
-                Console.WriteLine("-------MirrorLeft test FAILED-------");
-
+                case 0:
+                    UpdateLeft();
+                    break;
+                case 1:
+                    UpdateRight();
+                    break;
+                case 2:
+                    UpdateBoth();
+                    break;
+                case 3:
+                    MirrorToLeft();
+                    break;
+                case 4:
+                    MirrorToRight();
+                    break;
             }
         }
 
-        public static void MirrorToRight()
+        private void UpdateLeft()
         {
 
-            if (Check(sourceFile, destinationFolderPath, fileNames))
+            if (Check(sourceFolderPath, destinationFolderPath, logROW, Log))
             {
-
-                Console.WriteLine("=========MirrorRight test PASSED successfully=========");
+                logROW = DateTime.Now + " Left Folder updated successfully";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " <<<<<===== " + destinationFolderPath;
+                AddToLog(logROW, Log);
             }
             else
             {
-
-
-                Console.WriteLine("-------MirrorRight test FAILED-------");
+                logROW = DateTime.Now + " Left Folder update FAILED";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " <<<<<===== " + destinationFolderPath;
+                AddToLog(logROW, Log);
             }
+        }
+
+        private void UpdateRight()
+        {
+            if (Check(destinationFolderPath, sourceFolderPath, logROW, Log))
+            {
+                logROW = DateTime.Now + " Right Folder updated successfully";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " =====>>>>> " + destinationFolderPath;
+                AddToLog(logROW, Log);
+            }
+            else
+            {
+                logROW = DateTime.Now + " Right Folder update FAILED";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " =====>>>>> " + destinationFolderPath;
+                AddToLog(logROW, Log);
+            }
+        }
+
+
+        private void UpdateBoth()
+        {
+
+            if (Check(sourceFolderPath, destinationFolderPath, logROW, Log) && Check(destinationFolderPath, sourceFolderPath, logROW, Log))
+            {
+                logROW = DateTime.Now + " Both Folders updated successfully";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " <<<<<>>>>> " + destinationFolderPath;
+                AddToLog(logROW, Log);
+            }
+
+            else
+            {
+                logROW = DateTime.Now + " Both Folders update FAILED";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " <<<<<>>>>> " + destinationFolderPath;
+                AddToLog(logROW, Log);
+            }
+        }
+
+
+        private void MirrorToLeft()
+        {
+            if (Check(sourceFolderPath, sourceFolderPath, logROW, Log))
+            {
+                logROW = DateTime.Now + " MirrorLeft updated successfully";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " <<<<<<<<<< " + destinationFolderPath;
+                AddToLog(logROW, Log);
+            }
+            else
+            {
+                logROW = DateTime.Now + " MirrorLeft update FAILED";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " <<<<<<<<<< " + destinationFolderPath;
+                AddToLog(logROW, Log);
+            }
+        }
+
+        private void MirrorToRight()
+        {
+
+            if (Check(sourceFolderPath, sourceFolderPath, logROW, Log))
+            {
+                logROW = DateTime.Now + " MirrorRight updated successfully";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " >>>>>>>>>> " + destinationFolderPath;
+                AddToLog(logROW, Log);
+            }
+            else
+            {
+                logROW = DateTime.Now + " MirrorRight update FAILED";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " >>>>>>>>>> " + destinationFolderPath;
+                AddToLog(logROW, Log);
+            }
+        }
+
+        private void AddToLog(string logRow, List<string> logList)
+        {
+            logList.Add(logRow);
+        }
+
+        public List<string> LogToListBox()
+        {
+            return Log;
         }
 
     }

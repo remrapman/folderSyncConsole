@@ -1,0 +1,8 @@
+19.05.2016 16:10:37 Synchronization succeeded!
+
+  **  0 download changes applied
+  **  0 download changes failed
+  **  12 upload changes applied
+  **  0 upload changes failed
+19.05.2016 16:10:37 Right Folder updated successfully
+19.05.2016 16:10:37  C:\Users\User\Desktop\MouseWithoutBorders\bugs =====>>>>> C:\Users\User\Desktop\MouseWithoutBorders\NBA_Logs

@@ -9,7 +9,7 @@ using Microsoft.Synchronization;
 using Microsoft.Synchronization.Files;
 
 
-namespace folderSyncConsole
+namespace Microsoft
 {
     public enum SyncDirection
     {
@@ -22,15 +22,17 @@ namespace folderSyncConsole
     }
     public class DoSync
     {
-        public SyncDirection Direction { set; get; }
+        //public SyncDirection Direction { set; get; }
         private string sourceFolderPath;
         private string destinationFolderPath;
         private FileSyncScopeFilter filter;
         private FileSyncOptions options;
         private FileSyncProvider sourceFolderProvider = null;
         private FileSyncProvider destinationFolderProvider = null;
+        int Direction;
+        List<string> Log = new List<string>();
 
-        public DoSync(string sourceFolder, string destinationFolder, FileSyncScopeFilter outFilter, FileSyncOptions outOptions, SyncDirection outDirection)
+        public DoSync(string sourceFolder, string destinationFolder, FileSyncScopeFilter outFilter, FileSyncOptions outOptions, int outDirection)
         {
             sourceFolderPath = sourceFolder;
             destinationFolderPath = destinationFolder;
@@ -47,25 +49,26 @@ namespace folderSyncConsole
             SyncOrchestrator sync = new SyncOrchestrator();
             sync.LocalProvider = sourceFolderProvider;
             sync.RemoteProvider = destinationFolderProvider;
-            
+
             switch (Direction)  //TO DO: Change numbers to enums.
             {
-                case SyncDirection.UpdateRight:
-                    sync.Direction = SyncDirectionOrder.Upload;
-                    break;
-                case SyncDirection.UpdateLeft:
+                case 0:
                     sync.Direction = SyncDirectionOrder.Download;
                     break;
-                case SyncDirection.UpdateBoth:
+
+                case 1:
+                    sync.Direction = SyncDirectionOrder.Upload;
+                    break;
+                case 2:
                     sync.Direction = SyncDirectionOrder.DownloadAndUpload;
                     break;
 
-                case SyncDirection.MirrorToLeft:
+                case 3:
                     sync.Direction = SyncDirectionOrder.Download;
                     DeleteDifference(destinationFolderPath, sourceFolderPath);
                     break;
 
-                case SyncDirection.MirrorToRight:
+                case 4:
                     sync.Direction = SyncDirectionOrder.Upload;
                     DeleteDifference(sourceFolderPath, destinationFolderPath);
                     break;
@@ -78,17 +81,19 @@ namespace folderSyncConsole
                 SyncOperationStatistics stats = sync.Synchronize();
 
                 // Display statistics for the synchronization operation.
-                msg = "Synchronization succeeded!\n\n" +
-                    stats.DownloadChangesApplied + " download changes applied\n" +
-                    stats.DownloadChangesFailed + " download changes failed\n" +
-                    stats.UploadChangesApplied + " upload changes applied\n" +
+                msg = " Synchronization succeeded!\n\n" + "  **  " +
+                    stats.DownloadChangesApplied + " download changes applied\n" + "  **  " +
+                    stats.DownloadChangesFailed + " download changes failed\n" + "  **  " +
+                    stats.UploadChangesApplied + " upload changes applied\n" + "  **  " + 
                     stats.UploadChangesFailed + " upload changes failed";
+                
             }
             catch (Exception ex)
             {
-                msg = "Synchronization failed! Here's why: \n\n" + ex.Message;
+                msg = " Synchronization failed! Here's why: \n\n" + ex.Message;
             }
-            Console.WriteLine(msg, "Synchronization Results");
+            Log.Add(DateTime.Now + msg);
+            //Console.WriteLine(msg, "Synchronization Results");
         }
 
         private void DeleteDifference(string sourcePath, string destPath)
@@ -112,7 +117,7 @@ namespace folderSyncConsole
                 string fileName = Path.GetFileName(file.FullName);
                 for (int j = 0; j < count; j++)
                 {
-                    
+
                     if (fileName == sourceFilesArray[j])
                     {
                         needDelete = false;
@@ -120,7 +125,7 @@ namespace folderSyncConsole
                     }
                     else
                     {
-                        needDelete = true; 
+                        needDelete = true;
                     }
                 }
                 if (needDelete)
@@ -128,14 +133,12 @@ namespace folderSyncConsole
                     file.Delete();
                 }
             }
-          Console.ReadLine();
         }
-
-
+        
+        public List<string> LogToListBox()
+        {
+            return Log;
+        }
     }
-
-
-
-
 }
 
