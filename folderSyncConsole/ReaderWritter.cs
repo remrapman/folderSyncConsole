@@ -24,7 +24,7 @@ namespace Microsoft
 
         public static void Writelines(string outpath, List<string> list)
         {
-            using (StreamWriter writer = new StreamWriter(outpath))
+            using (StreamWriter writer = new StreamWriter(outpath, true))
             {
                 foreach (string line in list)
                 {

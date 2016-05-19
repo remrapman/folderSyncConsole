@@ -1,0 +1,66 @@
+19.05.2016 15:06:11 Synchronization succeeded!
+
+  **  0 download changes applied
+  **  0 download changes failed
+  **  11 upload changes applied
+  **  0 upload changes failed
+19.05.2016 15:06:11 Right Folder updated successfully
+19.05.2016 15:06:11  D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\MyDir\SourceFolder\ =====>>>>> D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\MyDir\DestinationFolder\
+19.05.2016 15:14:14 Synchronization succeeded!
+
+  **  2 download changes applied
+  **  0 download changes failed
+  **  0 upload changes applied
+  **  0 upload changes failed
+19.05.2016 15:14:14 Left Folder updated successfully
+19.05.2016 15:14:14  D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\MyDir\SourceFolder\ <<<<<===== D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\MyDir\DestinationFolder\
+19.05.2016 15:14:21 Synchronization succeeded!
+
+  **  0 download changes applied
+  **  0 download changes failed
+  **  10 upload changes applied
+  **  1 upload changes failed
+
+
+19.05.2016 15:14:21 Right Folder update FAILED
+19.05.2016 15:14:21  D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\MyDir\SourceFolder\ =====>>>>> D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\MyDir\DestinationFolder\
+19.05.2016 15:14:25 Synchronization succeeded!
+
+  **  0 download changes applied
+  **  0 download changes failed
+  **  11 upload changes applied
+  **  0 upload changes failed
+19.05.2016 15:14:25 Right Folder updated successfully
+19.05.2016 15:14:25  D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\MyDir\SourceFolder\ =====>>>>> D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\MyDir\DestinationFolder\
+19.05.2016 15:15:45 Synchronization succeeded!
+
+  **  0 download changes applied
+  **  0 download changes failed
+  **  10 upload changes applied
+  **  1 upload changes failed
+19.05.2016 15:15:45 MirrorRight updated successfully
+19.05.2016 15:15:45  D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\MyDir\SourceFolder\ >>>>>>>>>> D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\MyDir\DestinationFolder\
+19.05.2016 15:16:16 Synchronization succeeded!
+
+  **  2 download changes applied
+  **  0 download changes failed
+  **  0 upload changes applied
+  **  0 upload changes failed
+19.05.2016 15:16:16 MirrorLeft updated successfully
+19.05.2016 15:16:16  D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\MyDir\SourceFolder\ <<<<<<<<<< D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Debug\MyDir\DestinationFolder\
+19.05.2016 15:34:37 Synchronization succeeded!
+
+  **  0 download changes applied
+  **  0 download changes failed
+  **  1 upload changes applied
+  **  0 upload changes failed
+19.05.2016 15:36:00 Right Folder updated successfully
+19.05.2016 15:36:05  C:\Users\User\Desktop\MouseWithoutBorders\bugs =====>>>>> C:\Users\User\Desktop\MouseWithoutBorders\Evaluations_logs
+19.05.2016 15:53:39 Synchronization succeeded!
+
+  **  0 download changes applied
+  **  0 download changes failed
+  **  2 upload changes applied
+  **  0 upload changes failed
+19.05.2016 15:53:39 Right Folder updated successfully
+19.05.2016 15:53:39  C:\Users\User\Desktop\MouseWithoutBorders\NBA_Logs =====>>>>> C:\Users\User\Desktop\MouseWithoutBorders\Evaluations_logs

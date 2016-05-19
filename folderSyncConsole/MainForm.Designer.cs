@@ -159,6 +159,7 @@
             this.directionComboBox.Name = "directionComboBox";
             this.directionComboBox.Size = new System.Drawing.Size(225, 21);
             this.directionComboBox.TabIndex = 6;
+            this.directionComboBox.SelectedIndex = 0;
             // 
             // doSyncButton
             // 

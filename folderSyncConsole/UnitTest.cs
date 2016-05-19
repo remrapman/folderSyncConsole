@@ -15,7 +15,7 @@ namespace Microsoft
         private static string sourceFolderPath;
         private static string destinationFolderPath;
         private static int direction;
-        private static List<string> expectedResult;
+        public static List<string> expectedResult;
 
         public UnitTest(string sourceFolder, string destinationFolder, int outDirection, List<string> outExpectedResult)
         {
@@ -27,7 +27,6 @@ namespace Microsoft
 
         private List<string> Log = new List<string>();
         string logROW;
-
 
 
         private bool Check(string sourcePath, string destPath, string logRow, List<string> log)
@@ -50,10 +49,7 @@ namespace Microsoft
                     AddToLog(logRow, log);
                     break;
                 }
-
             }
-
-            //expectedResult = new List<string>();
             return check;
         }
 
@@ -89,6 +85,7 @@ namespace Microsoft
             }
             return expectedResult;
         }
+
         public void Test(int direction)
         {
             switch (direction)
@@ -118,10 +115,14 @@ namespace Microsoft
             {
                 logROW = DateTime.Now + " Left Folder updated successfully";
                 AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " <<<<<===== " + destinationFolderPath;
+                AddToLog(logROW, Log);
             }
             else
             {
                 logROW = DateTime.Now + " Left Folder update FAILED";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " <<<<<===== " + destinationFolderPath;
                 AddToLog(logROW, Log);
             }
         }
@@ -132,10 +133,14 @@ namespace Microsoft
             {
                 logROW = DateTime.Now + " Right Folder updated successfully";
                 AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " =====>>>>> " + destinationFolderPath;
+                AddToLog(logROW, Log);
             }
             else
             {
                 logROW = DateTime.Now + " Right Folder update FAILED";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " =====>>>>> " + destinationFolderPath;
                 AddToLog(logROW, Log);
             }
         }
@@ -148,11 +153,15 @@ namespace Microsoft
             {
                 logROW = DateTime.Now + " Both Folders updated successfully";
                 AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " <<<<<>>>>> " + destinationFolderPath;
+                AddToLog(logROW, Log);
             }
 
             else
             {
                 logROW = DateTime.Now + " Both Folders update FAILED";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " <<<<<>>>>> " + destinationFolderPath;
                 AddToLog(logROW, Log);
             }
         }
@@ -164,11 +173,14 @@ namespace Microsoft
             {
                 logROW = DateTime.Now + " MirrorLeft updated successfully";
                 AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " <<<<<<<<<< " + destinationFolderPath;
+                AddToLog(logROW, Log);
             }
             else
             {
-
                 logROW = DateTime.Now + " MirrorLeft update FAILED";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " <<<<<<<<<< " + destinationFolderPath;
                 AddToLog(logROW, Log);
             }
         }
@@ -180,10 +192,14 @@ namespace Microsoft
             {
                 logROW = DateTime.Now + " MirrorRight updated successfully";
                 AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " >>>>>>>>>> " + destinationFolderPath;
+                AddToLog(logROW, Log);
             }
             else
             {
                 logROW = DateTime.Now + " MirrorRight update FAILED";
+                AddToLog(logROW, Log);
+                logROW = DateTime.Now + "  " + sourceFolderPath + " >>>>>>>>>> " + destinationFolderPath;
                 AddToLog(logROW, Log);
             }
         }
@@ -191,13 +207,6 @@ namespace Microsoft
         private void AddToLog(string logRow, List<string> logList)
         {
             logList.Add(logRow);
-        }
-
-        public void PrintLog()
-        {
-            var message = string.Join(Environment.NewLine, Log);
-            MessageBox.Show(message);
-            //message = default(string);
         }
 
         public List<string> LogToListBox()

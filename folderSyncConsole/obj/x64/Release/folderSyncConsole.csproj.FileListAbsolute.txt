@@ -1,0 +1,13 @@
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Release\folderSyncConsole.exe.config
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Release\folderSyncConsole.exe
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Release\folderSyncConsole.pdb
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Release\Microsoft.Synchronization.dll
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Release\Microsoft.Synchronization.Files.dll
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Release\Microsoft.Synchronization.xml
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Release\Microsoft.Synchronization.Files.xml
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Release\ru\Microsoft.Synchronization.resources.dll
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\bin\x64\Release\ru\Microsoft.Synchronization.Files.resources.dll
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\obj\x64\Release\Microsoft.MainForm.resources
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\obj\x64\Release\folderSyncConsole.csproj.GenerateResource.Cache
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\obj\x64\Release\folderSyncConsole.exe
+D:\VS_projects\folderSyncConsole_finished\folderSyncConsole\obj\x64\Release\folderSyncConsole.pdb

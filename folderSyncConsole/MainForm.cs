@@ -20,17 +20,16 @@ namespace Microsoft
         {
             InitializeComponent();
         }
-        //TO DO: Added hardcoded pathes, must be removed after testing
-        public static string leftFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\SourceFolder\";
-        public static string rightFolderPath = Directory.GetCurrentDirectory() + @"\MyDir\DestinationFolder\";
+
+        public static string leftFolderPath;
+        public static string rightFolderPath;
         public FileSyncScopeFilter mainFilter = new FileSyncScopeFilter();
         FileSyncOptions mainOptions = new FileSyncOptions();
         private static int direction;
         private static List<string> expectedResult;
-        UnitTest test = new UnitTest(leftFolderPath, rightFolderPath, direction, expectedResult);
-        Prepare pre = new Prepare();
         List<string> forExFilter = new List<string>();
         List<string> forInFilter = new List<string>();
+        private static string logFilePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"log.txt");
 
         
         
@@ -43,7 +42,7 @@ namespace Microsoft
             if (result == DialogResult.OK)
             {
                 leftFolderTextBox.Text = fileDialog.SelectedPath;
-                ReturnPath(fileDialog.SelectedPath, leftFolderPath);
+                leftFolderPath = ReturnPath(fileDialog.SelectedPath, leftFolderPath);
             }
         }
 
@@ -61,14 +60,14 @@ namespace Microsoft
             if (result == DialogResult.OK)
             {
                 rightFolderTextBox.Text = fileDialog.SelectedPath;
-                ReturnPath(fileDialog.SelectedPath, rightFolderPath);
+                rightFolderPath = ReturnPath(fileDialog.SelectedPath, rightFolderPath);
             }
+            
         }
 
         private void analizeButton_Click(object sender, EventArgs e)
         {
            
-            pre.PrepareForTesting();
 
             CompareFolders leftDifference = new CompareFolders(leftFolderPath, rightFolderPath);
             CompareFolders rightDifference = new CompareFolders(rightFolderPath, leftFolderPath);
@@ -82,25 +81,18 @@ namespace Microsoft
         private void doSyncButton_Click(object sender, EventArgs e)
         {
 
-            pre.PrepareForTesting();
             direction = directionComboBox.SelectedIndex;
             DoSync doSync = new DoSync(leftFolderPath, rightFolderPath, mainFilter, mainOptions, direction);
-            
-            //TO DO: Remove parameter "direction" from GetExpectedResult
-            //ICollection<string> inList = mainFilter.FileNameIncludes;
-            //ICollection<string> exList = mainFilter.FileNameIncludes;
+            UnitTest test = new UnitTest(leftFolderPath, rightFolderPath, direction, expectedResult);
+            //TODO: expected results doesn't work correct when some items added to filter
             expectedResult = test.GetExpectedResult(direction);
             doSync.Sync();
-            //TO DO: why i create testId?
-            string testId = "Test" + direction;
             UnitTest test2 = new UnitTest(leftFolderPath, rightFolderPath, direction, expectedResult);
             test2.Test(direction);
             List<string> forLog = doSync.LogToListBox();
             forLog.AddRange(test2.LogToListBox());
             actionsListBox.DataSource = forLog;
-            
-            //actionsListBox.DataSource = doSync.LogToListBox();
-            //actionsListBox.DataSource = test2.LogToListBox();
+            ReaderWritter.Writelines(logFilePath, forLog);
             
         }
 
